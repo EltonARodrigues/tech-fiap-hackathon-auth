@@ -1,0 +1,29 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.438.0",
+    "@aws-sdk/client-s3": "^3.441.0",
+    "@aws-sdk/client-secrets-manager": "^3.441.0",
+    "@aws-sdk/credential-providers": "^3.441.0",
+    "amazon-cognito-identity-js": "^6.3.6",
+    "aws-jwt-verify": "^4.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.10"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.136",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.11.29",
+    "typescript": "^5.4.2"
+  }
+}

@@ -1,0 +1,1 @@
+export const USER_ATTRIBUTES = ['address', 'email', 'nickname', 'phone_number']
