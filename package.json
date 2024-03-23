@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npx tsc && npx tsc-alias -p tsconfig.json",
+    "deploy": "sls deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,12 +20,16 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.2",
-    "nodemailer": "^6.9.10"
+    "nodemailer": "^6.9.10",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.136",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.11.29",
+    "serverless": "^3.38.0",
+    "serverless-offline": "^13.2.0",
+    "serverless-plugin-typescript": "^2.1.5",
     "typescript": "^5.4.2"
   }
 }

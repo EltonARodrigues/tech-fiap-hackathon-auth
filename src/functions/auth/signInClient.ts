@@ -24,18 +24,25 @@ async function handler(event: APIGatewayEvent) {
   }
 
   try {
-
-    const token = await authClient(username, password);
+    await createUser(clientData);
+    const token = await authenticateCognitoUser(clientPoolData);
     return sendResponse(200, { token });
+
   } catch (error: unknown) {
-    if (error instanceof Error && error.name === 'UserNotFoundException') {
-      await createUser(clientData);
-      const token = await authenticateCognitoUser(clientPoolData);
-      return sendResponse(200, { token });
+    try {
+      if(error instanceof Error ) {
+        console.log(error.name)
+      }
+      if (error instanceof Error && (error.name === 'UsernameExistsException' || error.name === 'NotAuthorizedException')) {
+        const token = await authClient(username, password);
+        return sendResponse(200, { token });
+      }
+
+    } catch(err) {
+      return sendResponse(401, { mensagem: 'Login failed, contact supervisor' });
     }
-    console.log(error);
-    return sendResponse(401, { mensagem: 'Falha na autenticar do usuario' });
   }
+  return sendResponse(500, { mensagem: 'Login failed, contact supervisor' }); 
 }
 
 export { handler };

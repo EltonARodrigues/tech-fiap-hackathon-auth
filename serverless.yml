@@ -1,5 +1,5 @@
-app: auth-service-cognito
-service: auth-service-cognito
+app: fiap-hackathon-auth
+service: fiap-hackathon-auth
 frameworkVersion: "3"
 useDotenv: true
 
@@ -15,13 +15,14 @@ custom:
   CLIENTES_IDENTITY_POOL_ID: ${ssm:/fiap-tech/cognito/client/client-identity-pool/id}
   COGNITO_REGION: ${ssm:/fiap-tech/cognito/region}
   API_GATEWAY_API_ID: ${ssm:/fiap-tech/api_gateway/api_id}
-  SQS_NOTIFICATION: ${ssm:/fiap-tech/sqs/arn}
+  LAB_ROLE: ${ssm:/fiap-tech/lab_role}
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   timeout: 30
   region: us-east-1
+  role:  ${self:custom.LAB_ROLE}
   stage: dev
   httpApi:
     id: ${self:custom.API_GATEWAY_API_ID}
@@ -29,11 +30,6 @@ provider:
     CLIENTES_POOL_ID: ${self:custom.CLIENTES_POOL_ID}
     CLIENTES_POOL_CLIENT_ID: ${self:custom.CLIENTES_POOL_CLIENT_ID}
     CLIENTES_IDENTITY_POOL_ID: ${self:custom.CLIENTES_IDENTITY_POOL_ID}
-    SQS_NOTIFICATION: ${self:custom.SQS_NOTIFICATION}
-    EMAIL_HOST: ${env:EMAIL_HOST}
-    EMAIL_FROM: ${env:EMAIL_FROM}
-    EMAIL_USER: ${env:EMAIL_USER}
-    EMAIL_PASS: ${env:EMAIL_PASS}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -52,8 +48,3 @@ functions:
       - httpApi:
           path: /login
           method: post
-
-  notification:
-    handler: src/functions/notificacao/sendEmail.handler
-    events:	
-      - sqs: ${self:custom.SQS_NOTIFICATION}
